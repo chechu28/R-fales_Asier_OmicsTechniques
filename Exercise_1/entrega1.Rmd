@@ -2,7 +2,9 @@
 title: "entrega1"
 author: "Asier Ràfales Vila"
 date: "15/5/2019"
-output: html_document 
+output: 
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -11,66 +13,66 @@ library(Biobase)
 
 ```
 
-## summary 
+# Series GSE64896
 
-## Title
-Gene expression of distinct lung dendritic cell subsets.
-## Organism
-Mus musculus
-## Experiment type
-Expression profiling by array
-## Summary
-*Pulmonary dendritic cells are heterogenous cells comprise four distinct subsets including two conventional dendritic cell subsets, CD103+ and CD11bhiCD14lo cells, and two monocyte-derived dendritic cell subsets. Their functions in terms of migration and T cell activation are distinct, but genes regulating their features are to be determined.*
-*We used microarrays to identify a select set of genes that are expressed in conventinal dendritic cells and in monocyte-derived dendriti cells.*
+## Title:	Gene expression of distinct lung dendritic cell subsets
+## Organism:	Mus musculus
+## Experiment type:	Expression profiling by array
+## Summary:
+Pulmonary dendritic cells are heterogenous cells comprise four distinct subsets including two conventional dendritic cell subsets, CD103+ and CD11bhiCD14lo cells, and two monocyte-derived dendritic cell subsets. Their functions in terms of migration and T cell activation are distinct, but genes regulating their features are to be determined. We used microarrays to identify a select set of genes that are expressed in conventinal dendritic cells and in monocyte-derived dendriti cells.
  	
-## Overall design
+## Overall design:
 Four distinct lung DC subsets were purified by flow cytometry-based sorting after inhalation of lipopolusaccharide and ovalbumin. Each subset has three replicates.
  	
-## Contributor(s)	
-Nakano H, Cook D
-
+## Contributor(s):	
+*Nakano H, Cook D*
 ## Citation(s)	
-Nakano H, Moran TP, Nakano K, Gerrish KE et al. Complement receptor C5aR1/CD88 and dipeptidyl peptidase-4/CD26 define distinct hematopoietic lineages of dendritic cells. J Immunol 2015 Apr 15;194(8):3808-19. PMID: 25769922
+*Nakano H, Moran TP, Nakano K, Gerrish KE et al. Complement receptor C5aR1/CD88 and dipeptidyl peptidase-4/CD26 define distinct hematopoietic lineages of dendritic cells. J Immunol 2015 Apr 15;194(8):3808-19. PMID: 25769922*
 
-
-## Load Matrix into R environment 
-
+# Load Matrix into R environment 
+Contains tha samples as columns and the transcripts as rows so we can see the expression of the transcripts in the different samples.
 ```{r}
 express <- read.delim("~/Documentos/uni/2n/3r_trimestre/omics techniques/2nd_part/Rafales_Asier_OmicsTechniques/Exercise_1/express.txt", row.names=1, comment.char="#")
 ```
   
-Load targets 
+# Load targets 
+Contains the sample_nam, target, replicate, gender	and age.
 ```{r}
 targets <- read.delim("~/Documentos/uni/2n/3r_trimestre/omics techniques/2nd_part/Rafales_Asier_OmicsTechniques/Exercise_1/targets.txt")
 ```
 
+# Data analysis 
 
-
-
-
-## Data description 
-
-we have two files the first one, named express, contain a matrix with the information of rows (are diff gens or transcrits),  columns (are diff samples), so the numbers is the expression of the transcrip in each sample. 
-as we can observe 
-
-
-
+## Sumary of matrix expressions.
 ```{r}
 summary(express)
 
 ```
 
+Here we can see that the means are similar in every sample, also that the min is a very low number and the max a very big number that difere so much of the first and third quartile so we can supose that there are some large outliers. 
 
-Boxplot
+
+## Boxplot
 ```{r}
 boxplot(express, col = c(2,2,2,3,3,3,4,4,4,5,5,5))
-boxplot(log(express), col = c(2,2,2,3,3,3,4,4,4,5,5,5))
+```
+
+In this first box plot we can't see anythig exept that the means are low compared with the outliers, and that there are very much ouliers ans someones are very large. This confirem our Asumption on the sumary of the matrix expressions. 
+
+```{r}
 boxplot(express, col = c(2,2,2,3,3,3,4,4,4,5,5,5), outline = FALSE)
 ```
 
+Here we can se better tha plot, we remove the outliers so we confirm that the means and quartiles are similar.
+
+```{r}
+boxplot(log(express), col = c(2,2,2,3,3,3,4,4,4,5,5,5))
+```
+
+Here perform a log of the data to be able to see better the information. 
 
 
-Hist
+## Histograms 
 
 ```{r}
 #1
@@ -80,50 +82,14 @@ hist(log(express$GSM1582752))
 ##GSM1582753
 hist(express$GSM1582753)
 hist(log(express$GSM1582753))
-##GSM1582754
-hist(express$GSM1582754)
-hist(log(express$GSM1582754))
-
-##GSM1582755
-hist(express$GSM1582755)
-hist(log(express$GSM1582755))
-
-##GSM1582756
-hist(express$GSM1582756)
-hist(log(express$GSM1582756))
-
-##GSM1582757
-hist(express$GSM1582757)
-hist(log(express$GSM1582757))
-
-##GSM1582758
-hist(express$GSM1582758)
-hist(log(express$GSM1582758))
-
-##GSM1582759
-hist(express$GSM1582759)
-hist(log(express$GSM1582759))
-
-##GSM1582760
-hist(log(express$GSM1582760))
-
-##GSM1582761
-hist(express$GSM1582761)
-hist(log(express$GSM1582761))
-
-##GSM1582762
-hist(express$GSM1582762)
-hist(log(express$GSM1582762))
-
-##GSM1582763
-hist(express$GSM1582763)
-hist(log(express$GSM1582763))
-
-
 
 ```
+With these 4 histograms of the two of the samples we can assume that the res will be similar.
+The first histograms of each sample shows us that the majority of the expression is  between 0 and 5000
+The second ones, I have used those to confirm what we observe in the log boxplots. 
 
-Hist means
+
+# Hist means
 
 ```{r}
 
@@ -132,19 +98,20 @@ hist(row_mean)
 ## or
 hist(express[,1],main="first row")
 means <- apply(express,1,mean)
-hist(log(means))
+
 ```
 
 
 
 
+# Install biocelite
 
 ```{r}
 if (!require(GEOquery)) {
   source("http://bioconductor.org/biocLite.R")
   biocLite("GEOquery")
   }
-biocLite("GEOquery")
+
 ```
 
 
@@ -155,9 +122,10 @@ biocLite("GEOquery")
 
 
 
-expression sets
+# Expression sets
+*Now we are going to make a dataset with all information.*
 
-My info
+## My info
 ```{r}
 ## 
 myInfo=list(myName="Asier Rafales", myLab="Bioinformatics Lab", 
@@ -215,7 +183,7 @@ print(myDesc)
 ```
 
 
-
+## Finished set
 ```{r}
 myEset <- ExpressionSet(assayData=express2, 
                         phenoData=myAnnotDF,
@@ -224,6 +192,7 @@ myEset <- ExpressionSet(assayData=express2,
 show(myEset)
 
 ```
+
 
 ```{r}
 dim(exprs(myEset))
@@ -235,6 +204,8 @@ head(pData(myEset))
 
 ```
 
+
+## Small set.
 ```{r}
 smallEset <- myEset[1:15,c(1:3,6:8)]
 dim(exprs(smallEset))
@@ -244,6 +215,7 @@ all(colnames(exprs(smallEset))==rownames(pData(smallEset)))
 
 ```
 
+## Young set.
 
 ```{r}
 youngEset <- myEset[,pData(myEset)$age<30]
@@ -253,7 +225,7 @@ head(pData(youngEset))
 ```
 
 
-
+## Second method to performa a dataset
 ```{r}
 if (!require(GEOquery)) {
   BiocManager::install("GEOquery")
