@@ -24,9 +24,7 @@ targets
 
 
 ```{r readData}
-dataLocation<- "https://raw.githubusercontent.com/alexsanchezpla/Ejemplo_de_MDA_con_Bioconductor/master/results/Datos.Normalizados.Filtrados.csv2"
-dataMatrix <- read.csv2(dataLocation, row.names = 1)
-colnames(dataMatrix)==rownames(targets)
+
 ```
 
 ```{r designMatrix}
@@ -46,14 +44,17 @@ print(design); print(design2)
 ```
 
 ```{r contrastsMatrix}
-cont.matrix <- makeContrasts (
-  AvsAB = A-B,
-  AvsAC = A-C,
-  AvsAD = A-D,
-  BvsBC = B-C,
-  AvsBD = B-D,
-  AvsCD = C-D,
-  levels=design)
+cont.matrix1 <- makeContrasts( 
+  CD103.vs.CD14lo_cDCs = CD103-CD14lo_cDCs,
+  CD103.vs.CD14hi_moDCs = CD103-CD14hi_moDCs,
+  CD103.vs.inf.moDCs	= CD103-CD14hi_moDCs,
+  
+  CD14lo_cDCs.vs.CD14hi_moDCs = CD14lo_cDCs-CD14lo_cDCs,
+  CD14lo_cDCs.vs.inf.moDCs = CD14lo_cDCs-CD14hi_moDCs,
+        
+  CD14hi_moDCs.vs.inf.moDCs = CD14hi_moDCs-inf.moDCs,
+  
+  levels = design)
 ```
 
 ```{r fitModel}
