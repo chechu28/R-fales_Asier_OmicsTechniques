@@ -282,7 +282,8 @@ cont.matrix1 <- makeContrasts(
   
   CD14lo_cDCs.vs.CD14hi_moDCs = CD14lo_cDCs-CD14lo_cDCs,
   CD14lo_cDCs.vs.inf.moDCs = CD14lo_cDCs-CD14hi_moDCs,
-  CD14hi_moDCs.vs.inf.moDCs = CD14hi_moDCs-inf.moDCs
+  
+  CD14hi_moDCs.vs.inf.moDCs = CD14hi_moDCs-inf.moDCs,
   
   levels = design)
 comparison1 <- "Effect of Induction"

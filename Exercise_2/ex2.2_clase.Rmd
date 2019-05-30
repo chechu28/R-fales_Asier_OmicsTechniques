@@ -40,7 +40,7 @@ design<-matrix(
   nrow=12,byrow=F)
 design
 design2 <-model.matrix(~ 0+targets$Target)
-colnames(design)<- colnames(design2)<-c("A", "B", "C","D")
+colnames(design)<- colnames(design2)<-c("lev1","lev2","lev3" ,"lev4")
 rownames(design) <- rownames(design2)<- targets$SampleIDs 
 print(design); print(design2)
 ```

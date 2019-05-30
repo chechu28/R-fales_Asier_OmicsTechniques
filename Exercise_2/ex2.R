@@ -6,7 +6,7 @@
 #---------------------------------------------------------------------------------------------
 ###FOLDER DESTINATION DEFINITIONS
 #---------------------------------------------------------------------------------------------
-workingDir <-("~/Documentos/uni/2n/3r_trimestre/omics techniques/2nd_part/lab2/class_exercise")
+workingDir <-("~/Documentos/uni/2n/3r_trimestre/omics techniques/2nd_part/Rafales_Asier_OmicsTechniques/Exercise_2")
 workingDir
 dataDir <- file.path(workingDir, "GSE27174_RAW")
 dataDir
