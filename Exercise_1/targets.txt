@@ -1,13 +1,13 @@
-Sample_name	Target	Replicate	colors	gender	age
-GSM1582752	LungCD103+cDCs	rep1	2	male	10
-GSM1582753	LungCD103+cDCs	rep2	2	male	10
-GSM1582754	LungCD103+cDCs	rep3	2	male	10
-GSM1582755	LungCD11bhi_CD14lo_cDCs	rep1	3	male	10
-GSM1582756	LungCD11bhi_CD14lo_cDCs	rep2	3	male	10
-GSM1582757	LungCD11bhi_CD14lo_cDCs	rep3	3	male	10
-GSM1582758	LungCD11bhi_CD14hi_moDCs	rep1	4	male	10
-GSM1582759	LungCD11bhi_CD14hi_moDCs	rep2	4	male	10
-GSM1582760	LungCD11bhi_CD14hi_moDCs	rep3	4	male	10
-GSM1582761	LungCD11bhi_Ly6Chi_inf.moDCs	rep1	5	male	10
-GSM1582762	LungCD11bhi_Ly6Chi_inf.moDCs	rep2	5	male	10
-GSM1582763	LungCD11bhi_Ly6Chi_inf.moDCs	rep3	5	male	10
+Sample_name	group	Target	Replicate	colors	gender	age
+GSM1582752	1	LungCD103+cDCs	rep1	2	male	10
+GSM1582753	1	LungCD103+cDCs	rep2	2	male	10
+GSM1582754	1	LungCD103+cDCs	rep3	2	male	10
+GSM1582755	2	LungCD11bhi_CD14lo_cDCs	rep1	3	male	10
+GSM1582756	2	LungCD11bhi_CD14lo_cDCs	rep2	3	male	10
+GSM1582757	2	LungCD11bhi_CD14lo_cDCs	rep3	3	male	10
+GSM1582758	3	LungCD11bhi_CD14hi_moDCs	rep1	4	male	10
+GSM1582759	3	LungCD11bhi_CD14hi_moDCs	rep2	4	male	10
+GSM1582760	3	LungCD11bhi_CD14hi_moDCs	rep3	4	male	10
+GSM1582761	4	LungCD11bhi_Ly6Chi_inf.moDCs	rep1	5	male	10
+GSM1582762	4	LungCD11bhi_Ly6Chi_inf.moDCs	rep2	5	male	10
+GSM1582763	4	LungCD11bhi_Ly6Chi_inf.moDCs	rep3	5	male	10

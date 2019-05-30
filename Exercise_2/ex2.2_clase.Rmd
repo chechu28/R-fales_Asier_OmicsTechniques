@@ -1,0 +1,176 @@
+---
+title: "ex_clase_3"
+author: "Asier Ràfales Vila"
+date: "29/5/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+```{r readTargets}
+require (limma)
+targets <- read.delim("~/Documentos/uni/2n/3r_trimestre/omics techniques/2nd_part/Rafales_Asier_OmicsTechniques/Exercise_2/targets.txt")
+targets
+```
+
+
+
+
+
+
+```{r readData}
+dataLocation<- "https://raw.githubusercontent.com/alexsanchezpla/Ejemplo_de_MDA_con_Bioconductor/master/results/Datos.Normalizados.Filtrados.csv2"
+dataMatrix <- read.csv2(dataLocation, row.names = 1)
+colnames(dataMatrix)==rownames(targets)
+```
+
+```{r designMatrix}
+design<-matrix(
+  c(1,1,1,0,0,0,0,0,0,0,0,0,
+    0,0,0,1,1,1,0,0,0,0,0,0,
+    0,0,0,0,0,0,1,1,1,0,0,0,
+    0,0,0,0,0,0,0,0,0,1,1,1
+    
+  ),
+  nrow=12,byrow=F)
+design
+design2 <-model.matrix(~ 0+targets$Target)
+colnames(design)<- colnames(design2)<-c("A", "B", "C","D")
+rownames(design) <- rownames(design2)<- targets$SampleIDs 
+print(design); print(design2)
+```
+
+```{r contrastsMatrix}
+cont.matrix <- makeContrasts (
+  AvsAB = A-B,
+  AvsAC = A-C,
+  AvsAD = A-D,
+  BvsBC = B-C,
+  AvsBD = B-D,
+  AvsCD = C-D,
+  levels=design)
+```
+
+```{r fitModel}
+require(limma)
+fit<-lmFit(dataMatrix, design)
+fit.main<-contrasts.fit(fit, cont.matrix)
+fit.main<-eBayes(fit.main)
+```
+
+```{r extractResults}
+topTab_AvsB <- topTable (fit.main, number=nrow(fit.main), coef="AvsB", adjust="fdr"); head(topTab_AvsB)
+topTab_AvsL <- topTable (fit.main, number=nrow(fit.main), coef="AvsL", adjust="fdr"); head(topTab_AvsL)
+topTab_BvsL  <- topTable (fit.main, number=nrow(fit.main) , coef="BvsL", adjust="fdr"); head(topTab_BvsL)
+```
+
+```{r showResults}
+volcanoplot(fit.main, coef="AvsB", highlight=10)
+volcanoplot(fit.main, coef="AvsL", highlight=10)
+volcanoplot(fit.main, coef="BvsL", highlight=10)
+```
+`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
