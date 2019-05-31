@@ -36,10 +36,10 @@ design<-matrix(
     
   ),
   nrow=12,byrow=F)
-design
+#design
 design2 <-model.matrix(~ 0+targets$Target)
-colnames(design)<- colnames(design2)<-c("lev1","lev2","lev3" ,"lev4")
-rownames(design) <- rownames(design2)<- targets$SampleIDs 
+colnames(design)<- colnames(design2)<-c("CD103","CD14lo_cDCs","CD14hi_moDCs","inf.moDCs")
+rownames(design) <- rownames(design2)<- targets$Sample_name 
 print(design); print(design2)
 ```
 
@@ -55,8 +55,15 @@ cont.matrix1 <- makeContrasts(
   CD14hi_moDCs.vs.inf.moDCs = CD14hi_moDCs-inf.moDCs,
   
   levels = design)
-```
+comparison1 <- "CD103.vs.CD14lo_cDCs"
+comparison2 <- "CD103.vs.CD14hi_moDCs"
+comparison3 <- "CD103.vs.inf.moDCs"
+comparison4 <- "CD14lo_cDCs.vs.CD14hi_moDCs"
+comparison5 <- "CD14lo_cDCs.vs.inf.moDCs"
+comparison6 <- "CD14hi_moDCs.vs.inf.moDCs"
 
+```
+## until here
 ```{r fitModel}
 require(limma)
 fit<-lmFit(dataMatrix, design)

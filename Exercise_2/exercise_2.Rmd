@@ -307,6 +307,7 @@ comparison6 <- "CD14hi_moDCs.vs.inf.moDCs"
 #MODEL FIT
 fit1 <- lmFit(eset_filtered$eset, design)
 fit.main1 <- contrasts.fit(fit1, cont.matrix1)
+fit.main1
 fit.main1 <- eBayes(fit.main1)
 
 ```
