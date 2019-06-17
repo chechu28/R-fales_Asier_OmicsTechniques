@@ -27,9 +27,12 @@ setwd(resultsDir)
 
 ```{r eval=FALSE, include=FALSE}
 # DO NOT RUN 
-if (!require(GEOquery)) {
-  source("http://bioconductor.org/biocLite.R")
-  biocLite("GEOquery")
+installifnot <- function (pkg){
+  if (!require(pkg, character.only=T)){
+    BiocManager::install(pkg)
+}else{
+  require(pkg, character.only=T)
+  }
 }
 
 ```
@@ -63,7 +66,7 @@ installifnot("scatterplot3d")
 
 
 ```{r}
-targets <- read.delim("~/Documentos/uni/2n/3r_trimestre/omics techniques/2nd_part/Rafales_Asier_OmicsTechniques/Exercise_2/targets.txt")
+targets <- read.delim("/home/dima/Desktop/asier/Rafales_Asier_OmicsTechniques/Exercise_2/targets.txt")
 targets
 ```
 
@@ -283,14 +286,15 @@ print(design)
 cont.matrix1 <- makeContrasts( 
   CD103.vs.CD14lo_cDCs = CD103-CD14lo_cDCs,
   CD103.vs.CD14hi_moDCs = CD103-CD14hi_moDCs,
-  CD103.vs.inf.moDCs	= CD103-CD14hi_moDCs,
+  CD103.vs.inf.moDCs	= CD103-inf.moDCs,
   
-  CD14lo_cDCs.vs.CD14hi_moDCs = CD14lo_cDCs-CD14lo_cDCs,
-  CD14lo_cDCs.vs.inf.moDCs = CD14lo_cDCs-CD14hi_moDCs,
+  CD14lo_cDCs.vs.CD14hi_moDCs = CD14lo_cDCs-CD14hi_moDCs,
+  CD14lo_cDCs.vs.inf.moDCs = CD14lo_cDCs-inf.moDCs,
         
   CD14hi_moDCs.vs.inf.moDCs = CD14hi_moDCs-inf.moDCs,
   
   levels = design)
+cont.matrix1
 comparison1 <- "CD103.vs.CD14lo_cDCs"
 comparison2 <- "CD103.vs.CD14hi_moDCs"
 comparison3 <- "CD103.vs.inf.moDCs"
@@ -309,6 +313,7 @@ fit1 <- lmFit(eset_filtered$eset, design)
 fit.main1 <- contrasts.fit(fit1, cont.matrix1)
 fit.main1
 fit.main1 <- eBayes(fit.main1)
+fit.main1
 
 ```
 
@@ -322,15 +327,19 @@ fit.main1 <- eBayes(fit.main1)
 
 
 ```{r}
-
 #FILTER BY FALSE DISCOVERY RATE AND FOLD CHANGE
-topTab <-  topTable (fit.main1, number=nrow(fit.main1), coef="Induced.vs.WT", adjust="fdr",lfc=abs(3))
+topTab1 <-  topTable (fit.main1, number=nrow(fit.main1), coef=comparison1, adjust="fdr",lfc=abs(3))
+topTab2 <-  topTable (fit.main1, number=nrow(fit.main1), coef=comparison2, adjust="fdr",lfc=abs(3))
+topTab3 <-  topTable (fit.main1, number=nrow(fit.main1), coef=comparison3, adjust="fdr",lfc=abs(3))
+topTab4 <-  topTable (fit.main1, number=nrow(fit.main1), coef=comparison4, adjust="fdr",lfc=abs(3))
+topTab5 <-  topTable (fit.main1, number=nrow(fit.main1), coef=comparison5, adjust="fdr",lfc=abs(3))
+topTab6 <-  topTable (fit.main1, number=nrow(fit.main1), coef=comparison6, adjust="fdr",lfc=abs(3))
 
 #EXPORTED TO CSV AND HTML FILE
-write.csv2(topTab, file= file.path(resultsDir,paste("Selected.Genes.in.comparison.",
+write.csv2(topTab1, file= file.path(resultsDir,paste("Selected.Genes.in.comparison.",
                                                     comparison1, ".csv", sep = "")))
 
-print(xtable(topTab,align="lllllll"),type="html",html.table.attributes="",
+print(xtable(topTab1,align="lllllll"),type="html",html.table.attributes="",
       file=paste("Selected.Genes.in.comparison.",comparison1,".html", sep=""))
 
 ```
