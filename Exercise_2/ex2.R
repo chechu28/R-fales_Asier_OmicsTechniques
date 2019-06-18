@@ -240,40 +240,61 @@ dev.off()
 #PREPARE THE DATA
 my_frame <- data.frame(exprs(eset))
 head(my_frame)
-HMdata <- merge(my_frame, topTab, by.x = 0, by.y = 0)
+
+HMdata1 <- merge(my_frame, topTab1, by.x = 0, by.y = 0)
+rownames(HMdata) <- HMdata$Row.names
+HMdata1 <- HMdata[, -c(1,10:15)]
+head(HMdata)
+HMdata2 <- data.matrix(HMdata, rownames.force=TRUE)
+head(HMdata2)
+
+HMdata1 <- merge(my_frame, topTab1, by.x = 0, by.y = 0)
 rownames(HMdata) <- HMdata$Row.names
 HMdata <- HMdata[, -c(1,10:15)]
 head(HMdata)
 HMdata2 <- data.matrix(HMdata, rownames.force=TRUE)
 head(HMdata2)
+
+HMdata1 <- merge(my_frame, topTab1, by.x = 0, by.y = 0)
+rownames(HMdata) <- HMdata$Row.names
+HMdata <- HMdata[, -c(1,10:15)]
+head(HMdata)
+HMdata3 <- data.matrix(HMdata, rownames.force=TRUE)
+head(HMdata2)
+
+HMdata1 <- merge(my_frame, topTab1, by.x = 0, by.y = 0)
+rownames(HMdata) <- HMdata$Row.names
+HMdata <- HMdata[, -c(1,10:15)]
+head(HMdata)
+HMdata4 <- data.matrix(HMdata, rownames.force=TRUE)
+head(HMdata2)
+
+HMdata1 <- merge(my_frame, topTab1, by.x = 0, by.y = 0)
+rownames(HMdata) <- HMdata$Row.names
+HMdata <- HMdata[, -c(1,10:15)]
+head(HMdata)
+HMdata5 <- data.matrix(HMdata, rownames.force=TRUE)
+head(HMdata2)
+
+HMdata1 <- merge(my_frame, topTab1, by.x = 0, by.y = 0)
+rownames(HMdata) <- HMdata$Row.names
+HMdata <- HMdata[, -c(1,10:15)]
+head(HMdata)
+HMdata6 <- data.matrix(HMdata, rownames.force=TRUE)
+head(HMdata2)
+
 write.csv2(HMdata2, file = file.path(resultsDir,"Data2HM.csv"))
 
 #HEATMAP PLOT
 my_palette <- colorRampPalette(c("blue", "red"))(n = 299)
 
-heatmap.2(HMdata2,
-          Rowv=TRUE,
-          Colv=TRUE,
-          main="HeatMap Induced.vs.WT FC>=3",
-          scale="row",
-          col=my_palette,
-          sepcolor="white",
-          sepwidth=c(0.05,0.05),
-          cexRow=0.5,
-          cexCol=0.9,
-          key=TRUE,
-          keysize=1.5,
-          density.info="histogram",
-          ColSideColors=c(rep("red",4),rep("blue",4)),
-          tracecol=NULL,
-          srtCol=30)
 
 #EXPORT TO PDF FILE
-pdf(file.path(resultsDir,"HeatMap InducedvsWT.pdf"))
-heatmap.2(HMdata2,
+pdf(file.path(resultsDir,"HeatMap1"))
+heatmap.2(HMdata1,
           Rowv=TRUE,
           Colv=TRUE,
-          main="HeatMap Induced.vs.WT FC>=3",
+          main="HeatMap1",
           scale="row",
           col=my_palette,
           sepcolor="white",
@@ -283,7 +304,97 @@ heatmap.2(HMdata2,
           key=TRUE,
           keysize=1.5,
           density.info="histogram",
-          ColSideColors=c(rep("red",4),rep("blue",4)),
+          ColSideColors=sampleColor,
+          tracecol=NULL,
+          srtCol=30)
+dev.off()
+pdf(file.path(resultsDir,"HeatMap2"))
+heatmap.2(HMdata2,
+          Rowv=TRUE,
+          Colv=TRUE,
+          main="HeatMap2",
+          scale="row",
+          col=my_palette,
+          sepcolor="white",
+          sepwidth=c(0.05,0.05),
+          cexRow=0.5,
+          cexCol=0.9,
+          key=TRUE,
+          keysize=1.5,
+          density.info="histogram",
+          ColSideColors=sampleColor,
+          tracecol=NULL,
+          srtCol=30)
+dev.off()
+pdf(file.path(resultsDir,"HeatMap3"))
+heatmap.2(HMdata3,
+          Rowv=TRUE,
+          Colv=TRUE,
+          main="HeatMap3",
+          scale="row",
+          col=my_palette,
+          sepcolor="white",
+          sepwidth=c(0.05,0.05),
+          cexRow=0.5,
+          cexCol=0.9,
+          key=TRUE,
+          keysize=1.5,
+          density.info="histogram",
+          ColSideColors=sampleColor,
+          tracecol=NULL,
+          srtCol=30)
+dev.off()
+pdf(file.path(resultsDir,"HeatMap4"))
+heatmap.2(HMdata4,
+          Rowv=TRUE,
+          Colv=TRUE,
+          main="HeatMap4",
+          scale="row",
+          col=my_palette,
+          sepcolor="white",
+          sepwidth=c(0.05,0.05),
+          cexRow=0.5,
+          cexCol=0.9,
+          key=TRUE,
+          keysize=1.5,
+          density.info="histogram",
+          ColSideColors=sampleColor,
+          tracecol=NULL,
+          srtCol=30)
+dev.off()
+pdf(file.path(resultsDir,"HeatMap5"))
+heatmap.2(HMdata5,
+          Rowv=TRUE,
+          Colv=TRUE,
+          main="HeatMap5",
+          scale="row",
+          col=my_palette,
+          sepcolor="white",
+          sepwidth=c(0.05,0.05),
+          cexRow=0.5,
+          cexCol=0.9,
+          key=TRUE,
+          keysize=1.5,
+          density.info="histogram",
+          ColSideColors=sampleColor,
+          tracecol=NULL,
+          srtCol=30)
+dev.off()
+pdf(file.path(resultsDir,"HeatMap6"))
+heatmap.2(HMdata6,
+          Rowv=TRUE,
+          Colv=TRUE,
+          main="HeatMap6",
+          scale="row",
+          col=my_palette,
+          sepcolor="white",
+          sepwidth=c(0.05,0.05),
+          cexRow=0.5,
+          cexCol=0.9,
+          key=TRUE,
+          keysize=1.5,
+          density.info="histogram",
+          ColSideColors=sampleColor,
           tracecol=NULL,
           srtCol=30)
 dev.off()
