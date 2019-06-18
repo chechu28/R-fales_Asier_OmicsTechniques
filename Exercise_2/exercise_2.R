@@ -1,15 +1,15 @@
----
-title: "ex2"
-author: "Asier Ràfales Vila"
-date: "29/5/2019"
-output: html_document
----
-
-```{r setup, include=FALSE}
+#' ---
+#' title: "ex2"
+#' author: "Asier Ràfales Vila"
+#' date: "29/5/2019"
+#' output: html_document
+#' ---
+#' 
+## ----setup, include=FALSE------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
-```
 
-```{r}
+#' 
+## ------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------
 ###FOLDER DESTINATION DEFINITIONS
 #---------------------------------------------------------------------------------------------
@@ -20,70 +20,70 @@ dataDir
 resultsDir <- file.path(workingDir, "results")
 resultsDir
 setwd(resultsDir)
-```
 
+#' 
+#' 
+#' 
+#' 
+## ----eval=FALSE, include=FALSE-------------------------------------------
+## # DO NOT RUN
+## installifnot <- function (pkg){
+##   if (!require(pkg, character.only=T)){
+##     BiocManager::install(pkg)
+## }else{
+##   require(pkg, character.only=T)
+##   }
+## }
+## 
 
+#' 
+#' 
+#' #
+#' ## INSTALLATION OF PACKAGES NEEDED
+#' #
+#' 
+## ----eval=FALSE, include=FALSE-------------------------------------------
+## source("http://bioconductor.org/biocLite.R")
+## biocLite("GEOquery")
 
+#' 
+## ----eval=FALSE, include=FALSE-------------------------------------------
+## installifnot("pd.mogene.1.0.st.v1")
+## installifnot("mogene10sttranscriptcluster.db")
+## installifnot("oligo")
+## installifnot("limma")
+## installifnot("Biobase")
+## installifnot("arrayQualityMetrics")
+## installifnot("genefilter")
+## installifnot("multtest")
+## installifnot("annotate")
+## installifnot("xtable")
+## installifnot("gplots")
+## installifnot("scatterplot3d")
 
-```{r eval=FALSE, include=FALSE}
-# DO NOT RUN 
-installifnot <- function (pkg){
-  if (!require(pkg, character.only=T)){
-    BiocManager::install(pkg)
-}else{
-  require(pkg, character.only=T)
-  }
-}
-
-```
-
-
-#
-## INSTALLATION OF PACKAGES NEEDED
-#
-
-```{r eval=FALSE, include=FALSE}
-source("http://bioconductor.org/biocLite.R")
-biocLite("GEOquery")
-```
-
-```{r eval=FALSE, include=FALSE}
-installifnot("pd.mogene.1.0.st.v1")
-installifnot("mogene10sttranscriptcluster.db")
-installifnot("oligo")
-installifnot("limma")
-installifnot("Biobase")
-installifnot("arrayQualityMetrics")
-installifnot("genefilter")
-installifnot("multtest")
-installifnot("annotate")
-installifnot("xtable")
-installifnot("gplots")
-installifnot("scatterplot3d")
-```
-
-
-
-
-```{r}
+#' 
+#' 
+#' 
+#' 
+## ------------------------------------------------------------------------
 targets <- read.delim("/home/dima/Desktop/asier/Rafales_Asier_OmicsTechniques/Exercise_2/targets.txt")
 targets
-```
 
-
-```{r}
+#' 
+#' 
+## ------------------------------------------------------------------------
 CELfiles <- list.celfiles(file.path(dataDir))
 CELfiles
-```
 
-
-
-```{r}
+#' 
+#' 
+#' 
+## ------------------------------------------------------------------------
 rawData <- read.celfiles(file.path(dataDir,CELfiles))
-```
 
-
-```{r}
+#' 
+#' 
+## ------------------------------------------------------------------------
 #DEFINE SOME VARIABLES FOR PLOTS
 sampleNames <- as.character(targets$Sample_name)
 sampleNames
@@ -91,33 +91,33 @@ sampleColor <- as.character(targets$colors)
 sampleColor
 
 
-```
 
-#---------------------------------------------------------------------------------------------
-###QUALITY CONTROL OF ARRAYS: RAW DATA
-#---------------------------------------------------------------------------------------------
-
-```{r}
+#' 
+#' #---------------------------------------------------------------------------------------------
+#' ###QUALITY CONTROL OF ARRAYS: RAW DATA
+#' #---------------------------------------------------------------------------------------------
+#' 
+## ------------------------------------------------------------------------
 
 #BOXPLOT
 boxplot(rawData, which="all",las=2, main="Intensity distribution of RAW data", 
         cex.axis=0.6, col=sampleColor, names=sampleNames)
 
-```
 
-
-```{r}
+#' 
+#' 
+## ------------------------------------------------------------------------
 #HIERARQUICAL CLUSTERING
 clust.euclid.average <- hclust(dist(t(exprs(rawData))),method="average")
 plot(clust.euclid.average, labels=sampleNames, main="Hierarchical clustering of RawData", 
      cex=0.7,  hang=-1)
-```
 
-
-
-
-#PRINCIPAL COMPONENT ANALYSIS
-```{r}
+#' 
+#' 
+#' 
+#' 
+#' #PRINCIPAL COMPONENT ANALYSIS
+## ------------------------------------------------------------------------
 plotPCA <- function ( X, labels=NULL, colors=NULL, dataDesc="", scale=FALSE, formapunts=NULL, myCex=0.8,...)
 {
   pcX<-prcomp(t(X), scale=scale) # o prcomp(t(X))
@@ -133,12 +133,12 @@ plotPCA <- function ( X, labels=NULL, colors=NULL, dataDesc="", scale=FALSE, for
 
 plotPCA(exprs(rawData), labels=sampleNames, dataDesc="raw data", colors=sampleColor,
         formapunts=c(rep(16,4),rep(17,4)), myCex=0.6)
-```
 
-
-
-#SAVE TO A FILE
-```{r}
+#' 
+#' 
+#' 
+#' #SAVE TO A FILE
+## ------------------------------------------------------------------------
 
 
 pdf(file.path(resultsDir, "QCPlots_Raw.pdf"))
@@ -149,49 +149,49 @@ plot(clust.euclid.average, labels=sampleNames, main="Hierarchical clustering of 
 plotPCA(exprs(rawData), labels=sampleNames, dataDesc="raw data", colors=sampleColor,
         formapunts=c(rep(16,4),rep(17,4)), myCex=0.6)
 dev.off()
-```
 
-
-
-
-
-
-#---------------------------------------------------------------------------------------------
-###DATA NORMALIZATION
-#---------------------------------------------------------------------------------------------
-
-
-```{r}
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' #---------------------------------------------------------------------------------------------
+#' ###DATA NORMALIZATION
+#' #---------------------------------------------------------------------------------------------
+#' 
+#' 
+## ------------------------------------------------------------------------
 eset<-rma(rawData)
 
 write.exprs(eset, file.path(resultsDir, "NormData.txt"))
-```
 
-
-#---------------------------------------------------------------------------------------------
-###QUALITY CONTROL OF ARRAYS: NORMALIZED DATA
-#---------------------------------------------------------------------------------------------
-
-
-#BOXPLOT
-```{r}
+#' 
+#' 
+#' #---------------------------------------------------------------------------------------------
+#' ###QUALITY CONTROL OF ARRAYS: NORMALIZED DATA
+#' #---------------------------------------------------------------------------------------------
+#' 
+#' 
+#' #BOXPLOT
+## ------------------------------------------------------------------------
 
 boxplot(eset, las=2, main="Intensity distribution of Normalized data", cex.axis=0.6, 
         col=sampleColor, names=sampleNames)
 
-```
 
-```{r}
+#' 
+## ------------------------------------------------------------------------
 #HIERARQUICAL CLUSTERING
 clust.euclid.average <- hclust(dist(t(exprs(eset))),method="average")
 plot(clust.euclid.average, labels=sampleNames, main="Hierarchical clustering of NormData", 
      cex=0.7,  hang=-1)
 
-```
 
-
-#PRINCIPAL COMPONENT ANALYSIS
-```{r}
+#' 
+#' 
+#' #PRINCIPAL COMPONENT ANALYSIS
+## ------------------------------------------------------------------------
 plotPCA <- function ( X, labels=NULL, colors=NULL, dataDesc="", scale=FALSE, formapunts=NULL, myCex=0.8,...)
 {
   pcX<-prcomp(t(X), scale=scale) # o prcomp(t(X))
@@ -208,12 +208,12 @@ plotPCA <- function ( X, labels=NULL, colors=NULL, dataDesc="", scale=FALSE, for
 plotPCA(exprs(eset), labels=sampleNames, dataDesc="NormData", colors=sampleColor,
         formapunts=c(rep(16,4),rep(17,4)), myCex=0.6)
 
-```
 
-
-
-#SAVE TO A FILE
-```{r}
+#' 
+#' 
+#' 
+#' #SAVE TO A FILE
+## ------------------------------------------------------------------------
 pdf(file.path(resultsDir, "QCPlots_Norm.pdf"))
 boxplot(eset, las=2, main="Intensity distribution of Normalized data", cex.axis=0.6, 
         col=sampleColor, names=sampleNames)
@@ -222,28 +222,28 @@ plot(clust.euclid.average, labels=sampleNames, main="Hierarchical clustering of 
 plotPCA(exprs(eset), labels=sampleNames, dataDesc="selected samples", colors=sampleColor,
         formapunts=c(rep(16,4),rep(17,4)), myCex=0.6)
 dev.off()
-```
 
+#' 
+#' 
+## ----eval=FALSE, include=FALSE-------------------------------------------
+## install.packages("gridSVG")
+## source("http://bioconductor.org/biocLite.R")
+## biocLite('arrayQualityMetrics')
+## 
 
-```{r eval=FALSE, include=FALSE}
-install.packages("gridSVG")
-source("http://bioconductor.org/biocLite.R")
-biocLite('arrayQualityMetrics')
-
-```
-
-#ARRAY QUALITY METRICS
-```{r}
+#' 
+#' #ARRAY QUALITY METRICS
+## ------------------------------------------------------------------------
 arrayQualityMetrics(eset,  reporttitle="QualityControl", force=TRUE)
-```
 
-
-
-#---------------------------------------------------------------------------------------------
-###FILTER OUT THE DATA
-#---------------------------------------------------------------------------------------------
-
-```{r}
+#' 
+#' 
+#' 
+#' #---------------------------------------------------------------------------------------------
+#' ###FILTER OUT THE DATA
+#' #---------------------------------------------------------------------------------------------
+#' 
+## ------------------------------------------------------------------------
 
 annotation(eset) <- "org.Mm.eg.db"
 eset_filtered <- nsFilter(eset, var.func=IQR,
@@ -256,20 +256,20 @@ print(eset_filtered$filter.log$numLowVar)
 print(eset_filtered$eset)
 
 
-```
 
-
-#---------------------------------------------------------------------------------------------
-###DIFERENTIAL EXPRESSED GENES SELECTION. LINEAR MODELS. COMPARITIONS
-#---------------------------------------------------------------------------------------------
-
-
-```{r}
+#' 
+#' 
+#' #---------------------------------------------------------------------------------------------
+#' ###DIFERENTIAL EXPRESSED GENES SELECTION. LINEAR MODELS. COMPARITIONS
+#' #---------------------------------------------------------------------------------------------
+#' 
+#' 
+## ------------------------------------------------------------------------
 help(make.names)
-```
 
-
-```{r}
+#' 
+#' 
+## ------------------------------------------------------------------------
 
 #CONTRAST MATRIX.lINEAR MODEL
 treat <- targets$group
@@ -303,10 +303,10 @@ comparison5 <- "CD14lo_cDCs.vs.inf.moDCs"
 comparison6 <- "CD14hi_moDCs.vs.inf.moDCs"
 
 
-```
 
-
-```{r}
+#' 
+#' 
+## ------------------------------------------------------------------------
  
 #MODEL FIT
 fit1 <- lmFit(eset_filtered$eset, design)
@@ -315,18 +315,18 @@ fit.main1
 fit.main1 <- eBayes(fit.main1)
 fit.main1
 
-```
 
-
-
-
-#---------------------------------------------------------------------------------------------
-###DIFERENTIAL EXPRESSED GENES LISTS.TOPTABLES
-#---------------------------------------------------------------------------------------------
-
-
-
-```{r}
+#' 
+#' 
+#' 
+#' 
+#' #---------------------------------------------------------------------------------------------
+#' ###DIFERENTIAL EXPRESSED GENES LISTS.TOPTABLES
+#' #---------------------------------------------------------------------------------------------
+#' 
+#' 
+#' 
+## ------------------------------------------------------------------------
 #FILTER BY FALSE DISCOVERY RATE AND FOLD CHANGE
 topTab1 <-  topTable (fit.main1, number=nrow(fit.main1), coef=comparison1, adjust="fdr",lfc=abs(3))
 topTab2 <-  topTable (fit.main1, number=nrow(fit.main1), coef=comparison2, adjust="fdr",lfc=abs(3))
@@ -342,16 +342,16 @@ write.csv2(topTab1, file= file.path(resultsDir,paste("Selected.Genes.in.comparis
 print(xtable(topTab1,align="lllllll"),type="html",html.table.attributes="",
       file=paste("Selected.Genes.in.comparison.",comparison1,".html", sep=""))
 
-```
 
-
-
-#---------------------------------------------------------------------------------------------
-###VOLCANO PLOTS
-#---------------------------------------------------------------------------------------------
-
-
-```{r}
+#' 
+#' 
+#' 
+#' #---------------------------------------------------------------------------------------------
+#' ###VOLCANO PLOTS
+#' #---------------------------------------------------------------------------------------------
+#' 
+#' 
+## ------------------------------------------------------------------------
 
 volcanoplot(fit.main1, highlight=10, names=fit.main1$ID, 
             main = paste("Differentially expressed genes", colnames(cont.matrix1), sep="\n"))
@@ -364,16 +364,16 @@ volcanoplot(fit.main1, highlight = 10, names = fit.main1$ID,
 abline(v = c(-3, 3))
 dev.off()
 
-```
 
-
-
-#---------------------------------------------------------------------------------------------
-###HEATMAP PLOTS
-#---------------------------------------------------------------------------------------------
-
-
-```{r}
+#' 
+#' 
+#' 
+#' #---------------------------------------------------------------------------------------------
+#' ###HEATMAP PLOTS
+#' #---------------------------------------------------------------------------------------------
+#' 
+#' 
+## ------------------------------------------------------------------------
 
 #PREPARE THE DATA
 my_frame <- data.frame(exprs(eset))
@@ -386,10 +386,10 @@ HMdata2 <- data.matrix(HMdata, rownames.force=TRUE)
 head(HMdata2)
 write.csv2(HMdata2, file = file.path(resultsDir,"Data2HM.csv"))
 
-```
 
-
-```{r}
+#' 
+#' 
+## ------------------------------------------------------------------------
 
 #HEATMAP PLOT
 #---------------------------------------------------------------------------------------------
@@ -559,16 +559,16 @@ heatmap.2(HMdata6,
 purl("test.Rmd", output = "test2.R", documentation = 2)dev.off()
 
 
-```
 
-
-
-
-#---------------------------------------------------------------------------------------------
-###DATA ANNOTATION
-#---------------------------------------------------------------------------------------------
-
-```{r}
+#' 
+#' 
+#' 
+#' 
+#' #---------------------------------------------------------------------------------------------
+#' ###DATA ANNOTATION
+#' #---------------------------------------------------------------------------------------------
+#' 
+## ------------------------------------------------------------------------
 
 require(pd.mouse430.2)
 
@@ -581,18 +581,18 @@ write.csv(select(pd.mouse430.2,probes_tot,
                      columns = c("SYMBOL","ENSEMBL","ENTREZID","PROBEID","UNIGENE","UNIPROT","REFSEQ","GENENAME")),"anotations.csv")
 
 
-```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
